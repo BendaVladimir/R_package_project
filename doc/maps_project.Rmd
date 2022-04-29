@@ -1,0 +1,83 @@
+---
+title: "maps_project"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{maps_project}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## fars_read
+
+Load farse data from csv file <br />
+
+This function will used to import csv file to tydeverse tibble format.
+ Import will check if file exists. In case that file does not exist, function will stop.<br /><br /><br />
+
+`fars_read(filename)`<br />
+
+## make_filename
+
+Simple function, that will create file name from imput string or
+ number. In case that input is not numeric, than function changes
+ type to numeric.<br /><br /><br />
+
+`make_filename('2015')`<br />
+`make_filename(2015)`<br />
+
+## fars_read_years
+
+Function fars_read_years reads in multiple files and creates list of tibbls <br />
+
+Function will take in vector of years, either in string or numbers.<br />
+ fars_read_years will use functions make_filename, to create file name
+ to by loaded into list. Function fars_read will be also used in order to
+ read in cvs files. Final step of the function will be adding new column year
+ from variable year.<br />
+
+fars_read_years will have check on existance of csv file with year, that was entered
+ in vector of years.<br /><br /><br />
+
+
+`fars_read_years(c(2013, 2014))`<br />
+`fars_read_years(c('2013', '2014'))`<br />
+
+## fars_summarize_years
+
+This function will return tibble of values that have number of
+         combinations of months and years.<br />
+
+This function uses output from fars_read_years which has output of list of
+ tibbles. Secund step is creating union of all tibbles into one table. Third step
+ is creating summaries of number combinations by year and month. final step is
+ to create new table with values of month in columns and number of existing
+ combinations as values in columns.<br /><br /><br />
+
+`fars_summarize_years(2015)` <br />
+`fars_summarize_years('2015')` <br />
+
+## fars_map_state
+
+Function fars_map_state reads in fars data for one state and displays number
+of occurences on the map<br />
+
+This function will return map of selected state with number of occurences
+        by GPS cordinates with lattitude and longitude.<br />
+
+This function uses two previusly defined functions: make_filename (for creating
+a name of imported file) and make_filename (for loading csv file from file).
+In the secund step it verifies if the state.number is in the unique list of
+states. In case that number is not correct, than execution of function is stoped.
+Next step is to filter tibble by selected state. Secund check is done in order to
+verify if there are any accidents in mentioned state. Final step of function is
+to plot number of accindents on the map by lattitude and longitude.<br /><br /><br />
+
+`fars_map_state(13, 2015)`<br />
+`fars_map_state(13, '2015')`<br />
